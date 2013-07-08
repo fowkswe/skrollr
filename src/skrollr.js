@@ -22,6 +22,8 @@
 		VERSION: '0.6.9'
 	};
 
+	var powerSwitch = true;
+
 	//Minify optimization.
 	var hasProp = Object.prototype.hasOwnProperty;
 	var Math = window.Math;
@@ -582,6 +584,14 @@
 		return _instance;
 	};
 
+	Skrollr.prototype.powerOn = function() {
+		powerSwitch = true;
+	};
+
+	Skrollr.prototype.powerOff = function(name) {
+		powerSwitch = false;
+	};
+
 	/*
 		Private methods.
 	*/
@@ -601,6 +611,9 @@
 		var deltaTime;
 
 		_addEvent(documentElement, [EVENT_TOUCHSTART, EVENT_TOUCHMOVE, EVENT_TOUCHCANCEL, EVENT_TOUCHEND].join(' '), function(e) {
+			if(powerSwitch == false)
+				return;
+
 			e.preventDefault();
 
 			var touch = e.changedTouches[0];
